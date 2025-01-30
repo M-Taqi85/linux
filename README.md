@@ -97,6 +97,7 @@ Expected directory permissions:
 ## Screenshots
 Here are the screenshots demonstrating the practical execution.
 ![command1](https://github.com/user-attachments/assets/5685935f-379d-4899-88e0-0edd39c5c65e)
+![command2](https://github.com/user-attachments/assets/1216f6d0-e384-448e-8b0c-bce56af3434a)
 
 
 
