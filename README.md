@@ -276,6 +276,148 @@ sudo apt-mark unhold gimp
 
 ---
 
+# **Linux Virtualization Exercise**
 
+## **Part 1: Introduction to Virtualization Concepts**
 
+### **1.1 Research on Key Concepts**
 
+#### **Virtualization**
+Virtualization is a technology that allows multiple operating systems or applications to run on a single physical machine by creating virtual instances. It enhances resource efficiency, flexibility, and isolation.
+
+#### **Hypervisor**
+A hypervisor is software that manages virtual machines (VMs). It enables multiple OS instances to share hardware resources. Types of hypervisors:  
+- **Type 1 (Bare-metal):** Runs directly on hardware (e.g., KVM, Xen).  
+- **Type 2 (Hosted):** Runs atop an existing OS (e.g., VirtualBox, VMware Workstation).
+
+#### **Virtual Machines (VMs)**
+A VM is a fully isolated computing environment that runs its own OS. It emulates a complete hardware system, offering strong separation from the host.
+
+#### **Containers**
+Containers are lightweight environments that share the host OS kernel while isolating applications. They are quick to start and resource-efficient compared to VMs.
+
+#### **Differences Between VMs and Containers**
+| Feature          | Virtual Machines (VMs)      | Containers         |
+|------------------|-----------------------------|--------------------|
+| **Isolation**    | Full OS per VM             | Shared OS kernel   |
+| **Resource Usage** | High (CPU, RAM)          | Lightweight        |
+| **Performance**  | Slower (overhead)          | Faster             |
+| **Boot Time**    | Minutes                    | Seconds            |
+| **Use Case**     | Multiple OS environments   | Scalable apps      |
+
+### **1.2 Summary**
+Virtual machines and containers differ significantly in architecture and resource use. VMs provide full isolation with a dedicated OS, ideal for diverse OS needs, while containers leverage the host OS for speed and efficiency, perfect for app deployment.
+
+---
+
+## **Part 2: Working with Multipass**
+
+### **2.1 Install Multipass**
+```bash
+sudo snap install multipass
+![assingment 7 ss1](https://github.com/user-attachments/assets/0f33323f-45c4-4efa-8778-2e6e089cab2d)
+
+```
+Verify installation:
+```bash
+multipass version
+![assingment 7 ss1](https://github.com/user-attachments/assets/262010bb-977b-4484-bf44-b4ac02252f2f)
+
+```
+
+### **2.2 Practice Basic Multipass Commands**
+```bash
+multipass launch --name ubuntu-vm  # Launch a VM
+multipass list                      # List running VMs
+multipass info ubuntu-vm            # Show VM details
+multipass shell ubuntu-vm           # Enter VM shell
+multipass exec ubuntu-vm -- ls      # Run command inside VM
+multipass stop ubuntu-vm            # Stop the VM
+multipass delete ubuntu-vm          # Delete the VM
+```
+
+### **2.3 Cloud-Init Configuration**
+Create a file `cloud-init.yaml`:
+```yaml
+#cloud-config
+package_update: true
+packages:
+  - htop
+  - curl
+users:
+  - name: student
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: sudo
+    shell: /bin/bash
+```
+Start a VM with Cloud-Init:
+```bash
+multipass launch --cloud-init cloud-init.yaml --name custom-vm
+```
+
+### **2.4 File Sharing Between Host and Multipass VM**
+```bash
+mkdir ~/multipass-share
+multipass mount ~/multipass-share ubuntu-vm:/mnt/share
+multipass exec ubuntu-vm -- ls /mnt/share
+```
+
+---
+## **Part 3: Exploring LXD**
+
+### **3.1 Install and Initialize LXD**
+```bash
+sudo snap install lxd
+lxd init
+```
+
+### **3.2 Basic LXD Commands**
+```bash
+lxc launch ubuntu:22.04 my-container  # Create a container
+lxc list                               # List running containers
+lxc exec my-container -- bash          # Access container shell
+lxc stop my-container                   # Stop container
+lxc delete my-container                 # Delete container
+```
+
+---
+
+![assingment 7 ss2](https://github.com/user-attachments/assets/2422c5f1-929a-4020-b016-217337684356)
+![assingment 7 ss3](https://github.com/user-attachments/assets/2a9a2d4f-3672-4ee9-a15a-1148eb03032e)
+![assingment 7 ss4](https://github.com/user-attachments/assets/45ebae9a-e956-4ef6-a360-cac86867e113)
+![assingment 7 ss5](https://github.com/user-attachments/assets/1bd56cc0-ab96-4cdf-a9ae-d02fc4f3fb2d)
+
+## **Part 4: Running Applications with Docker**
+
+### **4.1 Install Docker**
+```bash
+sudo apt update
+sudo apt install docker.io -y
+sudo systemctl enable --now docker
+```
+
+### **4.2 Basic Docker Commands**
+```bash
+docker --version
+sudo docker run hello-world
+sudo docker ps
+```
+
+### **4.3 Docker Workshop Example**
+Create a simple Dockerfile:
+```dockerfile
+FROM ubuntu:latest
+RUN apt update && apt install -y nginx
+CMD ["nginx", "-g", "daemon off;"]
+```
+Build and run:
+```bash
+docker build -t my-nginx .
+docker run -d -p 8080:80 my-nginx
+```
+Check running containers:
+```bash
+docker ps
+```
+
+---
