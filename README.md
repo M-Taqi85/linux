@@ -428,10 +428,10 @@ docker ps
 
 ## Install UFW:
 
-       ``` sudo apt update
+        sudo apt update
 
         sudo apt install ufw -y
-        ```
+        
 
 ![assingment 8 ss1](https://github.com/user-attachments/assets/4c398847-a04b-45c6-88d9-dd0f2022edc1)
 
@@ -441,13 +441,13 @@ docker ps
 
 - Reset UFW to deafult
 
-        ```sudo ufw --force reset ```
+        sudo ufw --force reset 
 
 - Default policies that blocks everything except allowed 
 
-      ```  sudo ufw default deny incoming
+        sudo ufw default deny incoming
 
-        sudo ufw default allow outgoing```
+        sudo ufw default allow outgoing
 
 ![assingment 8 ss2](https://github.com/user-attachments/assets/859a48cf-dbaf-48a8-9136-2a633602b6b3)
 
@@ -455,38 +455,38 @@ docker ps
 
 - Allow SSH, It's port is 22
 
-        ```sudo ufw allow 22/tcp```
+        sudo ufw allow 22/tcp
 
 - Allow HTTP, It's port is 80
 
-       ``` sudo ufw allow 80/tcp```
+        sudo ufw allow 80/tcp
 
 - Allow HTTPS, It's port is 443
 
-        ```sudo ufw allow 443/tcp```
+        sudo ufw allow 443/tcp
 
 ![assingment 8 ss3](https://github.com/user-attachments/assets/327f07d6-0a8d-4fee-aeea-ee207172201d)
 
 
 - Prevent SYN Flood attacks
 
-       ``` sudo ufw limit proto tcp from any to any port 22
+        sudo ufw limit proto tcp from any to any port 22
 
         sudo ufw limit proto tcp from any to any port 80
 
-        sudo ufw limit proto tcp from any to any port 443```
+        sudo ufw limit proto tcp from any to any port 443
 
 ![assingment 8 ss4](https://github.com/user-attachments/assets/576e21ad-64f7-4a5e-b9be-ff5f62f432bf)
 
 
 - Enable logging
 
-        ```sudo ufw logging on```
+        sudo ufw logging on
 
 ![assingment 8 ss5](https://github.com/user-attachments/assets/f28d7c7b-42e5-48ea-bf10-e4eacdeece15)
 
 
 - Verify the Configuration
 
-        ```sudo ufw status verbose```
+        sudo ufw status verbose
 
